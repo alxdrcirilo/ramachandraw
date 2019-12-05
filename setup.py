@@ -12,7 +12,7 @@ setuptools.setup(
     long_description="Draws a Ramachandran plot based on the input PDB file (e.g. 1MBN.pdb). Makes use of a Gaussian "
                      "KDE (kernel density estimation) to plot the density of favoured torsion angles (&phi; and &psi;).",
     long_description_content_type="text/markdown",
-    # url="https://github.com/pypa/sampleproject",
+    url="https://github.com/alxdrcirilo/RamachanDraw",
     packages=setuptools.find_packages(),
     # install_requires=[
     #     "biopython==1.75",
