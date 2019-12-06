@@ -13,7 +13,8 @@ setuptools.setup(
                      "KDE (kernel density estimation) to plot the density of favoured torsion angles (&phi; and &psi;).",
     long_description_content_type="text/markdown",
     url="https://github.com/alxdrcirilo/RamachanDraw",
-    packages=setuptools.find_packages(),
+    packages=['RamachanDraw'],
+    package_data={'RamachanDraw': ['data/density_estimate.dat']},
     # install_requires=[
     #     "biopython==1.75",
     #     "matplotlib==3.1.2",
@@ -25,5 +26,4 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
-    package_data={'RamachanDraw': ['data/density_estimate.dat']},
 )
