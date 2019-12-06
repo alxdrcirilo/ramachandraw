@@ -15,11 +15,11 @@ setuptools.setup(
     url="https://github.com/alxdrcirilo/RamachanDraw",
     packages=['RamachanDraw'],
     package_data={'RamachanDraw': ['data/density_estimate.dat']},
-    # install_requires=[
-    #     "biopython==1.75",
-    #     "matplotlib==3.1.2",
-    #     "PyQt5==5.13.2",
-    # ],
+    install_requires=[
+        "biopython==1.75",
+        "matplotlib==3.1.2",
+        "PyQt5==5.13.2",
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
