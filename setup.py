@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="RamachanDraw",
-    version="0.1.15",
+    version="0.1.16",
     author="Alexandre D. Cirilo",
     author_email="a.dias.cirilo@umail.leidenuniv.nl",
     description="Ramachandran plotting tool",
