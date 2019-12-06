@@ -14,7 +14,7 @@ To draw a Ramachandran plot, we need a PDB file. You can use a local PDB file by
 
 #### Arguments
 
-```buildoutcfg
+```
 fetch(pdb_file)
 ```
 
@@ -28,7 +28,7 @@ Additionally, aminoacid residues that were not drawn on the plot can be extract 
 
 #### Arguments
 
-```buildoutcfg
+```
 phi_psi(pdb_file, return_ignored)
 ```
 
@@ -39,11 +39,11 @@ phi_psi(pdb_file, return_ignored)
 
 ### Ramachandran plot
 
-Makes use of the [matplotlib]() module, using the Qt5Agg backend ([PyQt5]()) to draw a highly customizable Ramachandran plot.
+Makes use of the [matplotlib](https://matplotlib.org/) module, using the Qt5Agg backend ([PyQt5](https://pypi.org/project/PyQt5/)) to draw a highly customizable Ramachandran plot.
 
 #### Arguments
 
-```buildoutcfg
+```
 plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, out='plot.png')
 ```
 
@@ -62,7 +62,7 @@ plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, out='
 
 Herein you will find an example from the PDB id corresponding to the myoglobin entry - [1MBN](https://www.ebi.ac.uk/pdbe/entry/pdb/1mbn/index) - in the Protein Data Bank. 
 
-```buildoutcfg
+```
 from RamachanDraw import fetch, phi_psi, plot
 
 # PDB id to be downloaded
