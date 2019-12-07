@@ -4,6 +4,14 @@ Draws a Ramachandran plot based on the input PDB file (e.g. 1MBN.pdb). Makes use
 
 ![](https://raw.githubusercontent.com/alxdrcirilo/RamachanDraw/master/extras/plot.png)
 
+## Installation
+
+RamachanDraw is hosted on [PyPi](https://pypi.org/project/RamachanDraw/).
+
+```
+pip install RamachanDraw
+```
+
 ## Usage
 
 RamachanDraw includes useful functions to effortlessly draw a Ramachandran plot.
