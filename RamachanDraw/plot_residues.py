@@ -5,8 +5,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import os
 
-matplotlib.use('Qt5Agg')
-
 
 def plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, out='plot.png'):
     # Initialize variables
