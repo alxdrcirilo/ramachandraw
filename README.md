@@ -47,7 +47,7 @@ phi_psi(pdb_file, return_ignored)
 
 ### Ramachandran plot
 
-Makes use of the [matplotlib](https://matplotlib.org/) module, using the Qt5Agg backend ([PyQt5](https://pypi.org/project/PyQt5/)) to draw a highly customizable Ramachandran plot.
+Makes use of the [matplotlib](https://matplotlib.org/) module to draw a highly customizable Ramachandran plot.
 
 #### Arguments
 
