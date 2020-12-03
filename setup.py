@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="RamachanDraw",
-    version="0.2.2",
+    version="0.2.3",
     author="Alexandre D. Cirilo",
     author_email="a.dias.cirilo@umail.leidenuniv.nl",
     description="Ramachandran plotting tool",
@@ -17,6 +17,7 @@ setuptools.setup(
     install_requires=[
         "biopython>=1.75",
         "matplotlib>=3.1.2",
+        "rich>=9.3"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
