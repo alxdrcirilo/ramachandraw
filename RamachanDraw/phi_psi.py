@@ -14,7 +14,7 @@ def phi_psi(pdb_file, return_ignored=False):
                 peptides = PPBuilder().build_peptides(chain)
                 for peptide in peptides:
                     for aa, angles in zip(peptide, peptide.get_phi_psi_list()):
-                        residue = aa.resname + str(aa.id[1])
+                        residue = chain.id + ":" + aa.resname + str(aa.id[1])
                         output[residue] = angles
 
         for key, value in output.items():
