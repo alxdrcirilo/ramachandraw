@@ -26,7 +26,7 @@ To draw a Ramachandran plot, we need a PDB file. You can use a local PDB file by
 fetch(pdb_file)
 ```
 
-- ```pdb_file (str)```: PDB id corresponding to the PDB entry to be downloaded.
+- ```pdb_file (str|list)```: PDB id(s) corresponding to the PDB entry to be downloaded.
 - ```Returns```: path to PDB file.
 
 ### Extract &phi; and &psi; angles
@@ -55,7 +55,7 @@ Makes use of the [matplotlib](https://matplotlib.org/) module to draw a highly c
 plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, out='plot.png')
 ```
 
-- ```pdb_file (str)```: PDB id corresponding to the PDB entry to be downloaded.
+- ```pdb_file (str|list)```: PDB id(s) corresponding to the PDB entry to be downloaded.
 - ```cmap (str)```: colormap to be used (from matplotlib) for the density of the favoured ("allowed") regions; default is <em>viridis</em>.
 - ```alpha (float)```: sets the opacity of the colormap (value between 0-1); default is 0.75.
 - ```dpi (int)```: resolution (<em>dots per inch</em>); default is 100.
@@ -85,7 +85,7 @@ phi_psi_dict, ignored_res = phi_psi(fetch(PDB_id), return_ignored=True)
 ```
 
 ## Contributing
-Feedback and constructive criticism is welcome: a.dias.cirilo@umail.leidenuniv.nl.
+Feedback and constructive criticism is welcome. If necessary, open an issue in the *issues* tab.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
