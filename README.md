@@ -85,7 +85,7 @@ phi_psi_dict, ignored_res = phi_psi(fetch(PDB_id), return_ignored=True)
 ```
 
 ## Contributing
-Feedback and constructive criticism is welcome: a.dias.cirilo@umail.leidenuniv.nl.
+Feedback and constructive criticism is welcome. If necessary, open an issue in the *issues* tab.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
