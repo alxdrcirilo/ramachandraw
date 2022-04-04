@@ -65,15 +65,23 @@ def plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, o
             'Unable to fetch file: {}. PDB entry probably does not exist.'.format(pdb_file)
         phi_psi_data, ignored_res, x, y = get_ignored_res(file=fp)
         ax.scatter(x, y, marker='.', s=3, c="".join([color if color else 'k']), label=fp)
+        return phi_psi_data, ignored_res, x, y
 
     if batch_mode:
+        file_output_map = {key: None for key in pdb_file}
         for _, file in enumerate(pdb_file):
-            start(fp=file, color=list(mcolors.BASE_COLORS.keys())[_])
+            file_output_map[file] = start(fp=file, color=list(mcolors.BASE_COLORS.keys())[_])
         ax.legend(bbox_to_anchor=(1.04, 1), loc='upper left')
     else:
-        start(fp=pdb_file)
+        output = start(fp=pdb_file)
 
     if save:
         plt.savefig(out)
     if show:
         plt.show()
+    
+    #return params
+    if batch_mode:
+        return ax, file_output_map
+    else:
+        return ax, output
