@@ -48,7 +48,7 @@ def plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, o
     ax.set_yticks([-180, -135, -90, -45, 0, 45, 90, 135, 180], minor=False)
     plt.axhline(y=0, color='k', lw=0.5)
     plt.axvline(x=0, color='k', lw=0.5)
-    plt.grid(b=None, which='major', axis='both', color='k', alpha=0.2)
+    plt.grid(visible=None, which='major', axis='both', color='k', alpha=0.2)
 
     # Normalize data
     data = np.log(np.rot90(Z))
