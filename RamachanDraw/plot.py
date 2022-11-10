@@ -48,7 +48,7 @@ def plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, o
     ax.set_yticks([-180, -135, -90, -45, 0, 45, 90, 135, 180], minor=False)
     plt.axhline(y=0, color='k', lw=0.5)
     plt.axvline(x=0, color='k', lw=0.5)
-    plt.grid(b=None, which='major', axis='both', color='k', alpha=0.2)
+    plt.grid(visible=None, which='major', axis='both', color='k', alpha=0.2)
 
     # Normalize data
     data = np.log(np.rot90(Z))
@@ -65,15 +65,23 @@ def plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, o
             'Unable to fetch file: {}. PDB entry probably does not exist.'.format(pdb_file)
         phi_psi_data, ignored_res, x, y = get_ignored_res(file=fp)
         ax.scatter(x, y, marker='.', s=3, c="".join([color if color else 'k']), label=fp)
+        return phi_psi_data, ignored_res, x, y
 
     if batch_mode:
+        file_output_map = {key: None for key in pdb_file}
         for _, file in enumerate(pdb_file):
-            start(fp=file, color=list(mcolors.BASE_COLORS.keys())[_])
+            file_output_map[file] = start(fp=file, color=list(mcolors.BASE_COLORS.keys())[_])
         ax.legend(bbox_to_anchor=(1.04, 1), loc='upper left')
     else:
-        start(fp=pdb_file)
+        output = start(fp=pdb_file)
 
     if save:
         plt.savefig(out)
     if show:
         plt.show()
+    
+    #return params
+    if batch_mode:
+        return ax, file_output_map
+    else:
+        return ax, output
