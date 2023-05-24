@@ -1,4 +1,7 @@
 # Ramachandran plotting tool
+![PyPI](https://img.shields.io/pypi/v/RamachanDraw)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/RamachanDraw)
+![PyPI - License](https://img.shields.io/pypi/l/RamachanDraw)
 
 Draws a Ramachandran plot based on the input PDB file (e.g. 1MBN.pdb). Makes use of a Gaussian KDE (kernel density estimation) to plot the density of favoured torsion angles (&phi; and &psi;).
 
