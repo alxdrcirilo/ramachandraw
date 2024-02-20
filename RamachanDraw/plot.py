@@ -1,43 +1,64 @@
-import os
-import matplotlib.pyplot as plt
+from os import sep as os_separator
+from os.path import realpath, exists
+from typing import Union
+
 import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
 import numpy as np
-from Bio.PDB import PDBParser, PPBuilder
 from pkg_resources import resource_stream
-from math import pi
+
+from .phi_psi import get_ignored_res
 
 
-def plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, out='plot.png'):
-    batch_mode = [True if type(pdb_file) is list else False][0]
+def get_pdb_name(path: Union[str, list, tuple], remove_extension: bool = True, upper_case: bool = False) -> tuple:
+    """
+    Extracts the PDB file name(s)
+    :param path: path to extract name from
+    :param remove_extension: with(out) file extension
+    :param upper_case: convert output names to upper case
+    :return: Filenames as iterable
+    """
+    if isinstance(path, str):
+        path = [path]
 
-    def get_ignored_res(file: str):
-        x, y, ignored, output = [], [], [], {}
-        for model in PDBParser().get_structure(id=None, file=file):
-            for chain in model:
-                peptides = PPBuilder().build_peptides(chain)
-                for peptide in peptides:
-                    for aa, angles in zip(peptide, peptide.get_phi_psi_list()):
-                        residue = aa.resname + str(aa.id[1])
-                        output[residue] = angles
+    path_out = []
+    for p in path:
+        path_split = p.split(os_separator)
+        pdb_name = path_split[-1]
+        if remove_extension:
+            pdb_name = '.'.join(pdb_name.split(".")[:-1])
+        path_out.append(pdb_name.upper() if upper_case else pdb_name)
+    return tuple(path_out)
 
-        for key, value in output.items():
-            # Only get residues with both phi and psi angles
-            if value[0] and value[1]:
-                x.append(value[0] * 180 / pi)
-                y.append(value[1] * 180 / pi)
-            else:
-                ignored.append((key, value))
 
-        return output, ignored, x, y
+def plot(pdb_file: Union[str, list, tuple], cmap: str = 'viridis', alpha: float = 0.75, dpi: int = 100,
+         save: bool = True, show: bool = False, out: str = 'plot.png',
+         ignore_pdb_warnings: bool = False) -> (plt.Axes, dict):
+    """
+    Plots Ramachandran plots of given PDB files.
+    :param pdb_file: Input PDB file path as string or list of PDB file paths
+    :param cmap: Plot CMAP
+    :param alpha: Plot alpha
+    :param dpi: Plot DPI
+    :param save: Save plot to <out> path
+    :param show: Show plot
+    :param out: Plot output path
+    :param ignore_pdb_warnings: silence call for PDB file parsing
+    :return: [0] matplotlib object
+             [1] dictionary with pdb_file name(s) as key and tuple of (phi_psi_data, ignored_res, x, y) as value
+    """
+    batch_mode = isinstance(pdb_file, list)
+    save = (isinstance(out, str) and len(out) > 0) or save
 
-    size = [(8.5, 5) if batch_mode else (5.5, 5)][0]
+    size = (8.5, 5) if batch_mode else (5.5, 5)
     plt.figure(figsize=size, dpi=dpi)
     ax = plt.subplot(111)
-    ax.set_title("".join(["Batch" if batch_mode else pdb_file]))
+    ax.set_title("Batch" if batch_mode else ''.join(get_pdb_name(pdb_file)))  # Batch or PDB file name
 
     # Import 'density_estimate.dat' data file
-    Z = np.fromfile(resource_stream('RamachanDraw', 'data/density_estimate.dat'))
-    Z = np.reshape(Z, (100, 100))
+    with resource_stream('RamachanDraw', 'data/density_estimate.dat') as plot_background_stream:
+        z = np.fromfile(plot_background_stream)
+    z = np.reshape(z, (100, 100))
 
     ax.set_aspect('equal')
     ax.set_xlabel('\u03C6')
@@ -51,37 +72,35 @@ def plot(pdb_file, cmap='viridis', alpha=0.75, dpi=100, save=True, show=False, o
     plt.grid(visible=None, which='major', axis='both', color='k', alpha=0.2)
 
     # Normalize data
-    data = np.log(np.rot90(Z))
-    ax.imshow(data, cmap=plt.get_cmap(cmap), extent=[-180, 180, -180, 180], alpha=alpha)
+    data = np.log(np.rot90(z))
+    ax.imshow(data, cmap=plt.get_cmap(cmap), extent=(-180, 180, -180, 180), alpha=alpha)
 
     # Fit contour lines correctly
-    data = np.rot90(np.fliplr(Z))
+    data = np.rot90(np.fliplr(z))
     ax.contour(data, colors='k', linewidths=0.5,
                levels=[10 ** i for i in range(-7, 0)],
                antialiased=True, extent=[-180, 180, -180, 180], alpha=0.65)
 
     def start(fp, color=None):
-        assert os.path.exists(fp), \
-            'Unable to fetch file: {}. PDB entry probably does not exist.'.format(pdb_file)
-        phi_psi_data, ignored_res, x, y = get_ignored_res(file=fp)
-        ax.scatter(x, y, marker='.', s=3, c="".join([color if color else 'k']), label=fp)
+        fp = realpath(fp)
+        assert exists(fp), \
+            'Unable to fetch file: {}. PDB entry probably does not exist.'.format(fp)
+        phi_psi_data, ignored_res, x, y = get_ignored_res(pdb_file_path=fp, ignore_pdb_warnings=ignore_pdb_warnings)
+        ax.scatter(x, y, marker='.', s=3, c="".join([color if color else 'k']), label=''.join(get_pdb_name(fp)))
         return phi_psi_data, ignored_res, x, y
 
+    file_output_map = {key: None for key in pdb_file}
     if batch_mode:
-        file_output_map = {key: None for key in pdb_file}
-        for _, file in enumerate(pdb_file):
-            file_output_map[file] = start(fp=file, color=list(mcolors.BASE_COLORS.keys())[_])
+        for idx, file_path in enumerate(pdb_file):
+            file_output_map[file_path] = start(fp=file_path, color=list(mcolors.BASE_COLORS.keys())[idx])
         ax.legend(bbox_to_anchor=(1.04, 1), loc='upper left')
     else:
-        output = start(fp=pdb_file)
+        file_output_map[pdb_file] = start(fp=pdb_file)
 
     if save:
         plt.savefig(out)
     if show:
         plt.show()
-    
-    #return params
-    if batch_mode:
-        return ax, file_output_map
-    else:
-        return ax, output
+
+    # return params
+    return ax, file_output_map
