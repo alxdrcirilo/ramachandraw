@@ -8,6 +8,7 @@ import numpy as np
 from pkg_resources import resource_stream
 
 from .phi_psi import get_ignored_res
+from .fetch import get_file
 
 
 def get_pdb_name(path: Union[str, list, tuple], remove_extension: bool = True, upper_case: bool = False) -> tuple:
@@ -26,7 +27,9 @@ def get_pdb_name(path: Union[str, list, tuple], remove_extension: bool = True, u
         path_split = p.split(os_separator)
         pdb_name = path_split[-1]
         if remove_extension:
-            pdb_name = '.'.join(pdb_name.split(".")[:-1])
+            pdb_name_split = pdb_name.split(".")
+            if len(pdb_name_split) > 1:
+                pdb_name = '.'.join(pdb_name_split[:-1])
         path_out.append(pdb_name.upper() if upper_case else pdb_name)
     return tuple(path_out)
 
@@ -82,7 +85,6 @@ def plot(pdb_file: Union[str, list, tuple], cmap: str = 'viridis', alpha: float 
                antialiased=True, extent=[-180, 180, -180, 180], alpha=0.65)
 
     def start(fp, color=None):
-        fp = realpath(fp)
         assert exists(fp), \
             'Unable to fetch file: {}. PDB entry probably does not exist.'.format(fp)
         phi_psi_data, ignored_res, x, y = get_ignored_res(pdb_file_path=fp, ignore_pdb_warnings=ignore_pdb_warnings)
@@ -92,9 +94,11 @@ def plot(pdb_file: Union[str, list, tuple], cmap: str = 'viridis', alpha: float 
     file_output_map = {key: None for key in pdb_file}
     if batch_mode:
         for idx, file_path in enumerate(pdb_file):
+            file_path = get_file(file_path)
             file_output_map[file_path] = start(fp=file_path, color=list(mcolors.BASE_COLORS.keys())[idx])
         ax.legend(bbox_to_anchor=(1.04, 1), loc='upper left')
     else:
+        pdb_file = get_file(pdb_file)
         file_output_map[pdb_file] = start(fp=pdb_file)
 
     if save:

@@ -4,6 +4,8 @@ from typing import Union
 from Bio.PDB import PDBParser, PPBuilder
 from rich.console import Console
 from rich.table import Table
+from os.path import exists, realpath
+from .fetch import get_file
 
 console = Console(color_system='windows')
 
@@ -19,6 +21,8 @@ def get_ignored_res(pdb_file_path: str, ignore_pdb_warnings: bool = False) -> (d
              [3] psi-angles
     """
     phi, psi, res_ignored, res_output = [], [], [], {}
+    pdb_file_path = get_file(pdb_file_path)
+
     for model in PDBParser(PERMISSIVE=False, QUIET=ignore_pdb_warnings).get_structure(id=None, file=pdb_file_path):
         for chain in model:
             peptides = PPBuilder().build_peptides(chain)

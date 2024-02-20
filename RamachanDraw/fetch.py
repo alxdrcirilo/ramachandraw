@@ -1,6 +1,15 @@
 from typing import Union
-
+from os.path import exists, realpath, basename
+from os import sep
 from Bio.PDB import PDBList
+
+
+def get_file(pdb:str):
+    if not exists(realpath(pdb)):
+        path = fetch(pdb)
+    else:
+        path = realpath(pdb)
+    return path
 
 
 def fetch(pdb: Union[str, list, tuple]):
