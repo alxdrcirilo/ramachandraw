@@ -1,12 +1,13 @@
-from Bio.PDB import PDBList
 from typing import Union
 
+from Bio.PDB import PDBList
 
-def fetch(pdb: Union[str, list]):
+
+def fetch(pdb: Union[str, list, tuple]):
     def start(pdb_id: str):
-        return PDBList().retrieve_pdb_file(pdb_code=pdb_id, pdir='PDB', file_format='pdb')
+        return PDBList(verbose=False).retrieve_pdb_file(pdb_code=pdb_id, pdir='PDB', file_format='pdb')
 
-    if type(pdb) is str:
+    if isinstance(pdb, str):
         return start(pdb_id=pdb)
-    if type(pdb) is list:
+    if isinstance(pdb, (tuple, list)):
         return [start(pdb_id=entry) for entry in pdb]
