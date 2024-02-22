@@ -1,5 +1,5 @@
 from os import sep as os_separator
-from os.path import realpath, exists
+from os.path import exists
 from typing import Union
 
 import matplotlib.colors as mcolors
@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pkg_resources import resource_stream
 
-from .phi_psi import get_ignored_res
 from .fetch import get_file
+from .phi_psi import get_ignored_res
 
 
 def get_pdb_name(path: Union[str, list, tuple], remove_extension: bool = True, upper_case: bool = False) -> tuple:
@@ -36,7 +36,7 @@ def get_pdb_name(path: Union[str, list, tuple], remove_extension: bool = True, u
 
 def plot(pdb_file: Union[str, list, tuple], cmap: str = 'viridis', alpha: float = 0.75, dpi: int = 100,
          save: bool = True, show: bool = False, out: str = 'plot.png',
-         ignore_pdb_warnings: bool = False) -> (plt.Axes, dict):
+         ignore_pdb_warnings: bool = False) -> tuple[plt.Axes, dict]:
     """
     Plots Ramachandran plots of given PDB files.
     :param pdb_file: Input PDB file path as string or list of PDB file paths
