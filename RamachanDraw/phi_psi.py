@@ -4,13 +4,13 @@ from typing import Union
 from Bio.PDB import PDBParser, PPBuilder
 from rich.console import Console
 from rich.table import Table
-from os.path import exists, realpath
+
 from .fetch import get_file
 
 console = Console(color_system='windows')
 
 
-def get_ignored_res(pdb_file_path: str, ignore_pdb_warnings: bool = False) -> (dict, list, list, list):
+def get_ignored_res(pdb_file_path: str, ignore_pdb_warnings: bool = False) -> tuple[dict, list, list, list]:
     """
     Calculates the Phi/Psi angles and corresponding x-y values
     :param pdb_file_path:
