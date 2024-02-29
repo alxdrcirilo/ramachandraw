@@ -80,7 +80,7 @@ def plot(
     :param int dpi: resolution (i.e. "dots per inch"), defaults to 100
     :param bool save: saves the plot to a file if True, defaults to True
     :param bool show: shows the plot interactively if True, defaults to False
-    :param str out: filename for plot output, defaults to "plot.png"
+    :param str filename: filename for plot output, defaults to "plot.png"
     :return Axes: Axes object to enable further customization if required
     """
 
@@ -135,7 +135,7 @@ def plot(
         ylim=(-180, 180),
         xticks=ticks,
         yticks=ticks,
-        title=pdb_filepath[0],
+        title=pdb_filepath,
     )
     plt.axhline(y=0, color="k", lw=0.5)
     plt.axvline(x=0, color="k", lw=0.5)
