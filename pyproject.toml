@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "ramachandraw"
+version = "1.0.0"
+description = "Ramachandran plotting tool"
+authors = ["Alexandre Cirilo <38657258+alxdrcirilo@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+matplotlib = "^3.8.3"
+biopython = "^1.83"
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.22.1"
+mypy = "^1.8.0"
+pyclean = "^2.7.6"
+pytest = "^8.0.1"
+pytest-coverage = "^0.0"
+ruff = "^0.2.2"
+scipy = "^1.12.0"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
+
+[tool.ruff.lint]
+select = ["I", "F401"]
+ignore-init-module-imports = true
