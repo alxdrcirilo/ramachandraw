@@ -1,0 +1,2 @@
+class NoPdbIdProvided(Exception):
+    pass
