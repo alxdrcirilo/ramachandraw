@@ -1,12 +1,10 @@
 .PHONY: clean format test all
 
 clean:
-	pyclean .
-	rm -rf .pdb/ obsolete/ .mypy_cache/ .pytest_cache/ .ruff_cache/ htmlcov/ .coverage
+	pyclean . --debris mypy --erase .pdb/**/* .pdb/ obsolete/**/* obsolete/ --yes
 
 format:
 	ruff format ramachandraw/ tests/ scripts/
-	ruff --fix ramachandraw/ tests/ scripts/
 
 test:
 	pytest --cov=ramachandraw --cov-report html
