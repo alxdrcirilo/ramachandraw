@@ -89,9 +89,12 @@ plot(pdb_filepath, cmap="viridis", alpha=0.75, dpi=100, save=True, show=False, f
 
 Herein you will find an example from the PDB id corresponding to the myoglobin entry: [1MBN](https://www.ebi.ac.uk/pdbe/entry/pdb/1mbn/index) - in the Protein Data Bank.
 
+### Single PDB
+
 ```python
 from ramachandraw.parser import get_phi_psi
 from ramachandraw.utils import fetch_pdb, plot
+
 
 # PDB id
 pdb_id = "1mbn"
@@ -101,7 +104,23 @@ plot(fetch_pdb(pdb_id))
 
 # Generate a dictionary to store the (phi, psi) torsion angles
 torsion_angles = get_phi_psi(fetch_pdb(pdb_id))
+```
 
+### Batch of PDBs
+
+```python
+from ramachandraw.parser import get_phi_psi
+from ramachandraw.utils import fetch_pdb, plot
+
+
+# PDB id
+pdb_ids = ["1mbn", "4hhb"]
+
+# Draw the Ramachandran plot
+plot(fetch_pdb(pdb_ids))
+
+# Generate a list of dictionaries to store the (phi, psi) torsion angles
+torsion_angles = get_phi_psi(fetch_pdb(pdb_ids))
 ```
 
 ## Contributing
