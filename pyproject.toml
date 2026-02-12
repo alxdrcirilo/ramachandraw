@@ -1,15 +1,16 @@
 [tool.poetry]
 name = "ramachandraw"
-version = "1.0.1"
+version = "1.1.0"
 description = "Ramachandran plotting tool"
 authors = ["Alexandre Cirilo <38657258+alxdrcirilo@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 matplotlib = "^3.8.3"
-biopython = "^1.83"
+biopython = ">=1.86"
+pillow = ">=12.1.1"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.8.0"
