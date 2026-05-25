@@ -69,6 +69,7 @@ def plot(
     save: bool = True,
     show: bool = False,
     filename: str = "plot.png",
+    title: Union[str, None] = None
 ) -> Axes:
     """Draw the Ramachandrawn plot.
 
@@ -81,6 +82,7 @@ def plot(
     :param bool save: saves the plot to a file if True, defaults to True
     :param bool show: shows the plot interactively if True, defaults to False
     :param str filename: filename for plot output, defaults to "plot.png"
+    :param Union[str, None] title: plot title, defaults to pdb filepath if None
     :return Axes: Axes object to enable further customization if required
     """
 
@@ -135,7 +137,7 @@ def plot(
         ylim=(-180, 180),
         xticks=ticks,
         yticks=ticks,
-        title=pdb_filepath,
+        title=title if title is not None else pdb_filepath,
     )
     plt.axhline(y=0, color="k", lw=0.5)
     plt.axvline(x=0, color="k", lw=0.5)
@@ -149,7 +151,7 @@ def plot(
 
     # Multiple PDBs
     elif isinstance(angles, list):
-        ax.set_title(f"Batch ({len(pdb_filepath)} files)")
+        ax.set_title(title if title is not None else f"Batch ({len(pdb_filepath)} files)")
         colors = cycle(mcolors.TABLEAU_COLORS.values())
         custom_legend = []
         for pdb, data in zip(pdb_filepath, angles):
