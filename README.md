@@ -70,7 +70,7 @@ Makes use of the [matplotlib](https://matplotlib.org/) module to draw a highly c
 ```python
 from ramachandraw.utils import plot
 
-plot(pdb_filepath, cmap="viridis", alpha=0.75, dpi=100, save=True, show=False, filename="plot.png")
+plot(pdb_filepath, cmap="viridis", alpha=0.75, dpi=100, save=True, show=False, filename="plot.png", title=None)
 ```
 
 - `pdb_file (str|list|tuple)`: PDB id(s) corresponding to the PDB entry to be downloaded
@@ -83,6 +83,7 @@ plot(pdb_filepath, cmap="viridis", alpha=0.75, dpi=100, save=True, show=False, f
 - `show (bool)` (*optional*):
   - `True`: shows the plot using the Qt5Agg backend; default is False.
 - `filename (str)` (*optional*): filename to be used in case the plot is saved (i.e. `save=True`); default is `plot.png`.
+- `title (str|None)` (*optional*): custom title for the plot. If `None`, defaults to the PDB filepath.
 - **Returns**: Ramachandran plot (`matplotlib.axes.Axes` object) that can be further customized if needed
 
 ## Example
