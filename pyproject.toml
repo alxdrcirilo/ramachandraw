@@ -1,29 +1,74 @@
-[tool.poetry]
+[project]
 name = "ramachandraw"
-version = "1.1.0"
+dynamic = ["version"]
 description = "Ramachandran plotting tool"
-authors = ["Alexandre Cirilo <38657258+alxdrcirilo@users.noreply.github.com>"]
+authors = [{name = "Alexandre Cirilo", email = "38657258+alxdrcirilo@users.noreply.github.com"}]
 license = "MIT"
 readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "biopython>=1.87",
+    "matplotlib>=3.8.3",
+    "pillow>=12.1.1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-matplotlib = "^3.8.3"
-biopython = ">=1.86"
-pillow = ">=12.1.1"
+[dependency-groups]
+dev = [
+    "mypy>=1.8.0",
+    "pyclean>=2.7.6",
+    "pytest>=8.0.1,<10.0.0",
+    "pytest-coverage>=0.0",
+    "ruff>=0.2.2",
+    "scipy>=1.12.0"
+]
 
-[tool.poetry.group.dev.dependencies]
-mypy = "^1.8.0"
-pyclean = "^2.7.6"
-pytest = ">=8.0.1,<10.0.0"
-pytest-coverage = "^0.0"
-ruff = "^0.2.2"
-scipy = "^1.12.0"
+[project.urls]
+Repository = "https://github.com/alxdrcirilo/ramachandraw"
 
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core"]
+[tool.ruff]
+line-length = 88
+target-version = "py310"
 
 [tool.ruff.lint]
-select = ["I", "F401"]
-ignore-init-module-imports = true
+select = [
+  "B",   # bugbear
+  "E",   # pycodestyle errors
+  "F",   # Pyflakes
+  "W",   # pycodestyle warnings
+  "C90", # McCabe
+  "C4",  # comprehensions
+  "I",   # isort
+  "UP",  # pyupgrade
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "ramachandraw",
+]
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "ramachandraw",
+]
+
+[tool.hatch.build.targets.wheel.sources]
+"ramachandraw" = "ramachandraw"
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.uv-dynamic-versioning]
+pattern = "default-unprefixed"
+fallback-version = "0.0.0"
+
+[tool.semantic_release]
+tag_format = "{version}"
+version_toml = []
+commit_parser = "angular"
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling", "uv-dynamic-versioning"]

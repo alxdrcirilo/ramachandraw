@@ -1,12 +1,15 @@
-.PHONY: clean format test all
+.PHONY: clean format test all install
+
+install:
+	uv sync --all-groups
 
 clean:
-	pyclean . --debris mypy --erase .pdb/**/* .pdb/ obsolete/**/* obsolete/ --yes
+	uv run pyclean . --debris mypy --erase .pdb/**/* .pdb/ obsolete/**/* obsolete/ --yes
 
 format:
-	ruff format ramachandraw/ tests/ scripts/
+	uv run ruff check --select I --fix
+	uv run ruff format
+
 
 test:
-	pytest --cov=ramachandraw --cov-report html
-
-all: clean format test
+	uv run pytest --cov=ramachandraw --cov-report html
