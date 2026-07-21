@@ -19,7 +19,7 @@ numpy==2.4.6
     #   matplotlib
 packaging==26.2
     # via matplotlib
-pillow==12.2.0
+pillow==12.3.0
     # via
     #   ramachandraw (pyproject.toml)
     #   matplotlib
