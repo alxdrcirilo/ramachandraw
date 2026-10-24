@@ -5,7 +5,7 @@ description = "Ramachandran plotting tool"
 authors = [{name = "Alexandre Cirilo", email = "38657258+alxdrcirilo@users.noreply.github.com"}]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
     "biopython>=1.87",
     "matplotlib>=3.8.3",
@@ -27,7 +27,7 @@ Repository = "https://github.com/alxdrcirilo/ramachandraw"
 
 [tool.ruff]
 line-length = 88
-target-version = "py310"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = [

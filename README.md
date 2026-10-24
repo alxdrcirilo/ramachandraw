@@ -2,7 +2,7 @@
 
 [![ramachandraw](https://github.com/alxdrcirilo/ramachandraw/actions/workflows/coveralls.yaml/badge.svg)](https://github.com/alxdrcirilo/ramachandraw/actions/workflows/coveralls.yaml)
 [![coverage](https://coveralls.io/repos/github/alxdrcirilo/ramachandraw/badge.svg?branch=master)](https://coveralls.io/github/alxdrcirilo/ramachandraw?branch=master)
-[![python version](https://img.shields.io/badge/python-3.10--3.14-blue)](https://www.python.org/)
+[![python version](https://img.shields.io/badge/python-3.11--3.14-blue)](https://www.python.org/)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![license: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![PyPI](https://img.shields.io/pypi/v/ramachandraw)
