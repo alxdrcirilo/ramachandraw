@@ -1,5 +1,6 @@
 """
-Extracts torsion angles (phi, psi) from top 8000 PDB structures and generates a PDF using a Gaussian kernel
+Extracts torsion angles (phi, psi) from top 8000 PDB structures and generates
+a PDF using a Gaussian kernel
 """
 
 from multiprocessing import Pool, cpu_count
@@ -35,9 +36,8 @@ if __name__ == "__main__":
             for [phi, psi] in pdb:
                 x.append(phi)
                 y.append(psi)
-        except:
-            print(f"Could not process...")
-            pass
+        except Exception:
+            print("Could not process...")
 
     print("Calculating point density...")
     x = np.asarray(x)

@@ -1,7 +1,6 @@
 from functools import wraps
 from importlib import resources
 from itertools import cycle
-from typing import Union
 
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
@@ -20,8 +19,9 @@ class NoPdbIdProvided(Exception):
 def handle_multiple_ids(func):
     """Decorator allowing more than one PDB id to be processed.
 
-    Whenever a Sequence of type list | tuple is provided, the wrapper will iterate over them.
-    Otherwise, when only one PDB is provided, the wrapped function will only be called once.
+    Whenever a Sequence of type list | tuple is provided, the wrapper will iterate
+    over them. Otherwise, when only one PDB is provided, the wrapped function will
+    only be called once.
     """
 
     @wraps(func)
@@ -48,9 +48,7 @@ def handle_multiple_ids(func):
 
 
 @handle_multiple_ids
-def fetch_pdb(
-    pdb_id: Union[str, list, tuple], verbose: bool = False
-) -> Union[str, list[str]]:
+def fetch_pdb(pdb_id: str | list | tuple, verbose: bool = False) -> str | list[str]:
     """Fetch PDB file given a PDB id (in .ent format).
 
     :param Union[str, list, tuple] pdb_id: pdb id(s) (e.g. "1mbn")
@@ -62,20 +60,20 @@ def fetch_pdb(
 
 
 def plot(
-    pdb_filepath: Union[str, list, tuple],
+    pdb_filepath: str | list | tuple,
     cmap: str = "viridis",
     alpha: float = 0.95,
     dpi: int = 200,
     save: bool = True,
     show: bool = False,
     filename: str = "plot.png",
-    title: Union[str, None] = None
+    title: str | None = None,
 ) -> Axes:
     """Draw the Ramachandrawn plot.
 
     This function is highly customizable, allowing different (optional) parameters.
 
-    :param Union[str, list, tuple] pdb_filepath: pdb filepath(s) (e.g. ".pbd/pdb1mbn.ent")
+    :param str | list | tuple pdb_filepath: pdb filepath(s) (e.g. ".pdb/pdb1mbn.ent")
     :param str cmap: colormap, defaults to "viridis"
     :param float alpha: transparency (i.e. alpha value), defaults to 0.75
     :param int dpi: resolution (i.e. "dots per inch"), defaults to 100
@@ -89,9 +87,10 @@ def plot(
     def plot_density_map() -> None:
         """Plot the density map of allowed/favoured regions.
 
-        The density map was obtained using the Top8000 dataset (top 8k high-resolution PDB structures).
+        The density map was obtained using the Top8000 dataset
+        (top 8k high-resolution PDB structures).
         """
-        density_file = resources.files(package="ramachandraw") / "kde.dat"
+        density_file = resources.files("ramachandraw") / "kde.dat"
         with density_file.open("r") as kde_data:
             z = np.fromfile(kde_data)
         z = np.reshape(z, (100, 100))
@@ -131,8 +130,8 @@ def plot(
     ticks = list(range(-180, 181, 45))
     ax.set(
         aspect="equal",
-        xlabel="\u03C6",
-        ylabel="\u03C8",
+        xlabel="\u03c6",
+        ylabel="\u03c8",
         xlim=(-180, 180),
         ylim=(-180, 180),
         xticks=ticks,
@@ -151,10 +150,11 @@ def plot(
 
     # Multiple PDBs
     elif isinstance(angles, list):
-        ax.set_title(title if title is not None else f"Batch ({len(pdb_filepath)} files)")
+        default_title = f"Batch ({len(pdb_filepath)} files)"
+        ax.set_title(title if title is not None else default_title)
         colors = cycle(mcolors.TABLEAU_COLORS.values())
         custom_legend = []
-        for pdb, data in zip(pdb_filepath, angles):
+        for pdb, data in zip(pdb_filepath, angles, strict=False):
             color = next(colors)
             draw(data=data, color=color)  # type: ignore
             point = Line2D(
